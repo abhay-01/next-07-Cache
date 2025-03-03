@@ -4,6 +4,13 @@ import { roboto_mono } from './fonts/fonts';
 import { fetchImagesWithCache, fetchImagesNoStore, fetchImagesForceCache } from './lib/fetchImages';
 import { revalidateImages } from './actions/revalidate';
 
+
+interface Image {
+  id: number;
+  title: string;
+  thumbnail: string;
+  brand: string;
+}
 export default async function Home() {
   const cachedImages = await fetchImagesWithCache();
   const noCacheImages = await fetchImagesNoStore();
@@ -34,10 +41,10 @@ export default async function Home() {
       
       <div>
         <h2 className={`text-2xl font-semibold mb-4 ${roboto_mono.className}`}>
-          Images with Cache: 'force-cache' (Default)
+          Images with Cache: force-cache (Default)
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          {forceCachedImages.products.slice(0,3).map((image) => (
+          {forceCachedImages.products.slice(0,3).map((image:Image) => (
             <div key={image.id} className="border rounded-lg overflow-hidden">
               <Image
                 src={image.thumbnail}
@@ -60,7 +67,7 @@ export default async function Home() {
           Images with Tagged Cache (revalidate: 3600)
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          {cachedImages.products.slice(0,3).map((image) => (
+          {cachedImages.products.slice(0,3).map((image:Image) => (
             <div key={image.id} className="border rounded-lg overflow-hidden">
               <Image
                 src={image.thumbnail}
@@ -79,10 +86,10 @@ export default async function Home() {
       
       <div>
         <h2 className={`text-2xl font-semibold mb-4 ${roboto_mono.className}`}>
-          Images with Cache: 'no-store'
+          Images with Cache: no-store
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          {noCacheImages.products.slice(0,3).map((image) => (
+          {noCacheImages.products.slice(0,3).map((image:Image) => (
             <div key={image.id} className="border rounded-lg overflow-hidden">
               <Image
                 src={image.thumbnail}
